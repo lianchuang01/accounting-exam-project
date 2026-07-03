@@ -1,0 +1,39 @@
+name: accounting_exam_app
+description: 会计等级考试智能刷题APP
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.0.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+
+  # HTTP & Data
+  dio: ^5.4.0
+  shared_preferences: ^2.2.2
+  provider: ^6.1.1
+  intl: ^0.19.0
+
+  # Charts
+  fl_chart: ^0.66.0
+
+  # TTS
+  flutter_tts: ^3.8.5
+
+  # UI
+  flutter_slidable: ^3.1.0
+  percent_indicator: ^4.2.3
+  shimmer: ^3.0.0
+  cached_network_image: ^3.3.1
+  pull_to_refresh: ^2.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+
+flutter:
+  uses-material-design: true

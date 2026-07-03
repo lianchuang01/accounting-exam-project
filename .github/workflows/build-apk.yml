@@ -1,0 +1,85 @@
+name: Build Flutter APK
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      build_mode:
+        description: 'Build mode (debug/release)'
+        required: true
+        default: 'debug'
+        type: choice
+        options:
+          - debug
+          - release
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🎯 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29.x'
+          channel: 'stable'
+          cache: true
+
+      - name: 📦 Install Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: 🔍 Verify Flutter
+        run: flutter doctor
+
+      - name: 📥 Get dependencies
+        run: flutter pub get
+
+      - name: 🧹 Analyze Dart code
+        run: flutter analyze
+
+      - name: 🏗️ Build APK
+        run: |
+          if [ "${{ github.event.inputs.build_mode }}" == "release" ]; then
+            flutter build apk --release
+          else
+            flutter build apk --debug
+          fi
+
+      - name: 📤 Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: accounting-exam-app-${{ github.event.inputs.build_mode || 'debug' }}
+          path: |
+            build/app/outputs/flutter-apk/*.apk
+          retention-days: 7
+          if-no-files-found: error
+
+      - name: 🏗️ Build App Bundle (Release Only)
+        if: github.event.inputs.build_mode == 'release'
+        run: flutter build appbundle --release
+
+      - name: 📤 Upload AAB Artifact (Release Only)
+        if: github.event.inputs.build_mode == 'release'
+        uses: actions/upload-artifact@v4
+        with:
+          name: accounting-exam-app-release-aab
+          path: |
+            build/app/outputs/bundle/release/*.aab
+          retention-days: 7
+          if-no-files-found: error
+
+      - name: ✅ Summary
+        run: |
+          echo "## ✅ Build Complete" >> $GITHUB_STEP_SUMMARY
+          echo "APK files:" >> $GITHUB_STEP_SUMMARY
+          ls -lh build/app/outputs/flutter-apk/ >> $GITHUB_STEP_SUMMARY
