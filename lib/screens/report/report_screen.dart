@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/report.dart';
+import '../../services/api_client.dart';
 import '../../services/report_service.dart';
 import '../../config/theme.dart';
 
 class ReportScreen extends StatefulWidget {
   final ReportService? reportService;
-  late final ReportService _service = reportService ?? ReportService(ApiClient());
   final String studentName;
 
   const ReportScreen({
@@ -15,6 +15,8 @@ class ReportScreen extends StatefulWidget {
     this.reportService,
     this.studentName = '',
   });
+
+  ReportService get _service => reportService ?? ReportService(ApiClient());
 
   @override
   State<ReportScreen> createState() => _ReportScreenState();

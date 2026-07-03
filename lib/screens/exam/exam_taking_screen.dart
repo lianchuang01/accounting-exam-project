@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../models/question.dart';
 import '../../models/exam_paper.dart';
+import '../../services/api_client.dart';
 import '../../services/exam_service.dart';
 import '../../providers/auth_provider.dart';
 
@@ -636,6 +637,28 @@ class _ExamTakingScreenState extends State<ExamTakingScreen> {
                   ),
                 ),
               ],
+            ),
+          ),
+        );
+        break;
+
+      case QuestionType.calculation:
+      case QuestionType.comprehensive:
+        widgets.add(
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: TextField(
+              maxLines: 4,
+              decoration: InputDecoration(
+                hintText: question.type == QuestionType.calculation
+                    ? '请输入计算结果'
+                    : '请输入答案',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: const EdgeInsets.all(14),
+              ),
+              onChanged: (v) => _onAnswerChanged(question.id.toString(), v),
             ),
           ),
         );

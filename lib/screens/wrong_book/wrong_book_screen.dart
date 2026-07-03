@@ -3,13 +3,15 @@ import 'package:intl/intl.dart';
 
 import '../../models/wrong_question.dart';
 import '../../models/voice_segment.dart';
+import '../../services/api_client.dart';
 import '../../services/report_service.dart';
 
 class WrongBookScreen extends StatefulWidget {
   final ReportService? reportService;
-  late final ReportService _service = reportService ?? ReportService(ApiClient());
 
   const WrongBookScreen({super.key, this.reportService});
+
+  ReportService get _service => reportService ?? ReportService(ApiClient());
 
   @override
   State<WrongBookScreen> createState() => _WrongBookScreenState();
