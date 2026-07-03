@@ -21,7 +21,7 @@ class _ExamTakingScreenState extends State<ExamTakingScreen> {
   ExamPaper? _paper;
   List<Question> _questions = [];
   Map<String, dynamic> _answers = {}; // questionId -> answer value
-  Map<String, bool> _bookmarkedQuestions = {};
+  Map<int, bool> _bookmarkedQuestions = {};
 
   bool _isLoading = true;
   String? _error;
@@ -108,7 +108,7 @@ class _ExamTakingScreenState extends State<ExamTakingScreen> {
 
   bool _isQuestionAnswered(int index) {
     if (index >= _questions.length) return false;
-    return _answers.containsKey(_questions[index].id);
+    return _answers.containsKey(_questions[index].id.toString());
   }
 
   int get _answeredCount => _answers.length;

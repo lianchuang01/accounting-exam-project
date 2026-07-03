@@ -40,8 +40,8 @@ class _ExamListScreenState extends State<ExamListScreen>
     try {
       final papers = await _examService.getPapers(1);
       setState(() {
-        _simulationPapers = papers.where((p) => p.paperType == "SIMULATION").toList();
-        _officialPapers = papers.where((p) => p.paperType == "OFFICIAL").toList();
+        _simulationPapers = papers.where((p) => p.paperType == "SIMULATION").toList().cast<ExamPaper>();
+        _officialPapers = papers.where((p) => p.paperType == "OFFICIAL").toList().cast<ExamPaper>();
         _isLoading = false;
       });
     } catch (e) {

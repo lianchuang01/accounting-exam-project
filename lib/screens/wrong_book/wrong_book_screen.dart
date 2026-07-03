@@ -44,8 +44,8 @@ class _WrongBookScreenState extends State<WrongBookScreen>
 
     try {
       final results = await Future.wait([
-        _service.getWrongQuestions(isCleared: false),
-        _service.getWrongQuestions(isCleared: true),
+        widget._service.getWrongQuestions(isCleared: false),
+        widget._service.getWrongQuestions(isCleared: true),
       ]);
 
       setState(() {
@@ -69,7 +69,7 @@ class _WrongBookScreenState extends State<WrongBookScreen>
 
   Future<void> _onReadAll() async {
     try {
-      await _service.getVoiceQueue();
+      await widget._service.getVoiceQueue();
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -94,7 +94,7 @@ class _WrongBookScreenState extends State<WrongBookScreen>
     try {
       final questionId = int.tryParse(question.questionId.toString());
       final ids = questionId != null ? [questionId] : null;
-      await _service.getVoiceQueue(questionIds: ids);
+      await widget._service.getVoiceQueue(questionIds: ids);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -119,7 +119,7 @@ class _WrongBookScreenState extends State<WrongBookScreen>
     try {
       final qId = int.tryParse(question.questionId.toString());
       if (qId == null) return;
-      await _service.clearWrongQuestion(qId);
+      await widget._service.clearWrongQuestion(qId);
       setState(() {
         _notClearedQuestions.removeWhere((q) => q.id == question.id);
       });
