@@ -38,7 +38,7 @@ class _ReportScreenState extends State<ReportScreen> {
     });
 
     try {
-      final data = await widget.reportService.getReport();
+      final data = await _service.getReport();
       setState(() {
         _report = StudentReport.fromJson(data);
         _isLoading = false;
