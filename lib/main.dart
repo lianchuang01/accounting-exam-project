@@ -83,7 +83,7 @@ class AccountingExamApp extends StatelessWidget {
         if (settings.name == AppRoutes.examResult) {
           final args = settings.arguments as Map<String, dynamic>;
           return MaterialPageRoute(
-            builder: (_) => ExamResultScreen(
+            builder: (_) => GradedResultScreen(
               examRecordId: args['examRecordId'] as int,
               resultData: args['resultData'] as Map<String, dynamic>,
             ),

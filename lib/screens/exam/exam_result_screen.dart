@@ -3,9 +3,14 @@ import 'package:intl/intl.dart';
 import '../../models/exam_result.dart';
 
 class GradedResultScreen extends StatefulWidget {
-  final GradedResult examResult;
+  final int examRecordId;
+  final Map<String, dynamic> resultData;
 
-  const GradedResultScreen({super.key, required this.examResult});
+  const GradedResultScreen({
+    super.key,
+    required this.examRecordId,
+    required this.resultData,
+  });
 
   @override
   State<GradedResultScreen> createState() => _GradedResultScreenState();
@@ -29,7 +34,7 @@ class _GradedResultScreenState extends State<GradedResultScreen>
 
   @override
   Widget build(BuildContext context) {
-    final result = widget.examResult;
+    final result = GradedResult.fromJson(widget.resultData);
     final score = result.score;
     final totalScore = result.totalScore;
     final scorePercent = totalScore > 0 ? score / totalScore : 0.0;
