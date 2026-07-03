@@ -120,9 +120,13 @@ class _ExamTakingScreenState extends State<ExamTakingScreen> {
     _timer?.cancel();
 
     try {
+      final answerList = _answers.entries.map((e) => {
+        'questionId': int.tryParse(e.key) ?? 0,
+        'userAnswer': e.value,
+      }).toList();
       final result = await _examService.submitExam(
-        paperId: int.tryParse(widget.paperId) ?? 0,
-        answers: _answers,
+        examRecordId: int.tryParse(widget.paperId) ?? 0,
+        answers: answerList,
       );
       if (!mounted) return;
       Navigator.pushReplacementNamed(
