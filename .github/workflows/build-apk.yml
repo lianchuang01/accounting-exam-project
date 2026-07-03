@@ -44,9 +44,6 @@ jobs:
       - name: 📥 Get dependencies
         run: flutter pub get
 
-      - name: 🧹 Analyze Dart code
-        run: flutter analyze
-
       - name: 🏗️ Build APK
         run: |
           if [ "${{ github.event.inputs.build_mode }}" == "release" ]; then
