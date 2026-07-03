@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../services/exam_service.dart';
+import "../../services/exam_service.dart";
+import "../../services/api_client.dart";
 import '../../providers/auth_provider.dart';
 
 class AdaptivePracticeScreen extends StatefulWidget {
@@ -10,7 +11,7 @@ class AdaptivePracticeScreen extends StatefulWidget {
 }
 
 class _AdaptivePracticeScreenState extends State<AdaptivePracticeScreen> {
-  final ExamService _examService = ExamService();
+  final ExamService _examService = ExamService(ApiClient());
   String _selectedSubject = '';
   int _questionCount = 20;
   bool _isGenerating = false;

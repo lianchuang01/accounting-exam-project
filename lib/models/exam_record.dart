@@ -1,7 +1,7 @@
 class ExamRecord {
-  final String id;
-  final String studentId;
-  final String paperId;
+  final int id;
+  final int studentId;
+  final int paperId;
   final DateTime startTime;
   final DateTime? submitTime;
   final int durationSeconds;
@@ -31,9 +31,9 @@ class ExamRecord {
 
   factory ExamRecord.fromJson(Map<String, dynamic> json) {
     return ExamRecord(
-      id: json['id'] as String,
-      studentId: json['studentId'] as String,
-      paperId: json['paperId'] as String,
+      id: (json['id'] as num).toInt(),
+      studentId: (json['studentId'] as num).toInt(),
+      paperId: (json['paperId'] as num).toInt(),
       startTime: DateTime.parse(json['startTime'] as String),
       submitTime: json['submitTime'] != null
           ? DateTime.parse(json['submitTime'] as String)

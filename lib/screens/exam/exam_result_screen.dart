@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../models/exam_result.dart';
 
-class ExamResultScreen extends StatefulWidget {
-  final ExamResult examResult;
+class GradedResultScreen extends StatefulWidget {
+  final GradedResult examResult;
 
-  const ExamResultScreen({super.key, required this.examResult});
+  const GradedResultScreen({super.key, required this.examResult});
 
   @override
-  State<ExamResultScreen> createState() => _ExamResultScreenState();
+  State<GradedResultScreen> createState() => _GradedResultScreenState();
 }
 
-class _ExamResultScreenState extends State<ExamResultScreen>
+class _GradedResultScreenState extends State<GradedResultScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -76,7 +76,7 @@ class _ExamResultScreenState extends State<ExamResultScreen>
     );
   }
 
-  Widget _buildScoreOverview(ExamResult result) {
+  Widget _buildScoreOverview(GradedResult result) {
     final score = result.score;
     final totalScore = result.totalScore;
     final scorePercent = totalScore > 0 ? score / totalScore : 0.0;
@@ -340,7 +340,7 @@ class _ExamResultScreenState extends State<ExamResultScreen>
     return '${sec}秒';
   }
 
-  Widget _buildAnswerComparison(ExamResult result) {
+  Widget _buildAnswerComparison(GradedResult result) {
     final questions = result.questions;
 
     if (questions.isEmpty) {

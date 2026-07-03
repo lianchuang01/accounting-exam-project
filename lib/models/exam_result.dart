@@ -1,5 +1,5 @@
 class GradedResult {
-  final String examRecordId;
+  final int examRecordId;
   final double totalScore;
   final double scoreObtained;
   final int totalQuestions;
@@ -23,7 +23,7 @@ class GradedResult {
 
   factory GradedResult.fromJson(Map<String, dynamic> json) {
     return GradedResult(
-      examRecordId: json['examRecordId'] as String,
+      examRecordId: (json['examRecordId'] as num).toInt(),
       totalScore: (json['totalScore'] as num?)?.toDouble() ?? 0.0,
       scoreObtained: (json['scoreObtained'] as num?)?.toDouble() ?? 0.0,
       totalQuestions: (json['totalQuestions'] as num?)?.toInt() ?? 0,
@@ -41,7 +41,7 @@ class GradedResult {
 
   Map<String, dynamic> toJson() {
     return {
-      'examRecordId': examRecordId,
+      'examRecordId': examRecordId.toString(),
       'totalScore': totalScore,
       'scoreObtained': scoreObtained,
       'totalQuestions': totalQuestions,
@@ -55,7 +55,7 @@ class GradedResult {
 }
 
 class AnswerComparison {
-  final String questionId;
+  final int questionId;
   final String questionType;
   final String stem;
   final String? optionA;
@@ -89,7 +89,7 @@ class AnswerComparison {
 
   factory AnswerComparison.fromJson(Map<String, dynamic> json) {
     return AnswerComparison(
-      questionId: json['questionId'] as String,
+      questionId: (json['questionId'] as num).toInt(),
       questionType: json['questionType'] as String,
       stem: json['stem'] as String,
       optionA: json['optionA'] as String?,

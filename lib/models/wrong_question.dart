@@ -1,6 +1,6 @@
 class WrongQuestionVO {
-  final String id;
-  final String questionId;
+  final int id;
+  final int questionId;
   final int wrongCount;
   final bool isCleared;
   final DateTime? lastWrongAt;
@@ -25,8 +25,8 @@ class WrongQuestionVO {
 
   factory WrongQuestionVO.fromJson(Map<String, dynamic> json) {
     return WrongQuestionVO(
-      id: json['id'] as String,
-      questionId: json['questionId'] as String,
+      id: (json['id'] as num).toInt(),
+      questionId: (json['questionId'] as num).toInt(),
       wrongCount: (json['wrongCount'] as num?)?.toInt() ?? 0,
       isCleared: json['isCleared'] as bool? ?? false,
       lastWrongAt: json['lastWrongAt'] != null

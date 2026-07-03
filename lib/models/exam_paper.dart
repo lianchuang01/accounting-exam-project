@@ -1,7 +1,7 @@
 import 'question.dart';
 
 class ExamPaper {
-  final String id;
+  final int id;
   final String title;
   final String paperType;
   final String? yearSource;
@@ -29,7 +29,7 @@ class ExamPaper {
 
   factory ExamPaper.fromJson(Map<String, dynamic> json) {
     return ExamPaper(
-      id: json['id'] as String,
+      id: (json['id'] as num).toInt(),
       title: json['title'] as String,
       paperType: json['paperType'] as String,
       yearSource: json['yearSource'] as String?,

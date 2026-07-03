@@ -114,7 +114,7 @@ class BarItem {
 }
 
 class LineItem {
-  final String examRecordId;
+  final int examRecordId;
   final DateTime examTime;
   final double accuracyRate;
 
@@ -126,7 +126,7 @@ class LineItem {
 
   factory LineItem.fromJson(Map<String, dynamic> json) {
     return LineItem(
-      examRecordId: json['examRecordId'] as String,
+      examRecordId: (json['examRecordId'] as num).toInt(),
       examTime: DateTime.parse(json['examTime'] as String),
       accuracyRate: (json['accuracyRate'] as num?)?.toDouble() ?? 0.0,
     );
@@ -194,7 +194,7 @@ class WeaknessItem {
 }
 
 class KnowledgeMasteryVO {
-  final String knowledgeId;
+  final int knowledgeId;
   final String knowledgeName;
   final String? chapter;
   final int totalAttempts;
@@ -216,7 +216,7 @@ class KnowledgeMasteryVO {
 
   factory KnowledgeMasteryVO.fromJson(Map<String, dynamic> json) {
     return KnowledgeMasteryVO(
-      knowledgeId: json['knowledgeId'] as String,
+      knowledgeId: (json['knowledgeId'] as num).toInt(),
       knowledgeName: json['knowledgeName'] as String,
       chapter: json['chapter'] as String?,
       totalAttempts: (json['totalAttempts'] as num?)?.toInt() ?? 0,
