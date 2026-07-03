@@ -223,7 +223,7 @@ class _WrongBookScreenState extends State<WrongBookScreen>
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
-        onTap: () => _toggleExpand(question.id),
+        onTap: () => _toggleExpand(question.id.toString()),
         child: AnimatedSize(
           duration: const Duration(milliseconds: 250),
           curve: Curves.easeInOut,

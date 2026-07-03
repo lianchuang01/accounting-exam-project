@@ -400,6 +400,10 @@ class _ExamTakingScreenState extends State<ExamTakingScreen> {
         return Colors.orange;
       case QuestionType.judgement:
         return Colors.teal;
+      case QuestionType.calculation:
+        return Colors.purple;
+      case QuestionType.comprehensive:
+        return Colors.indigo;
     }
   }
 
@@ -411,6 +415,10 @@ class _ExamTakingScreenState extends State<ExamTakingScreen> {
         return '多选题';
       case QuestionType.judgement:
         return '判断题';
+      case QuestionType.calculation:
+        return '计算题';
+      case QuestionType.comprehensive:
+        return '综合题';
     }
   }
 

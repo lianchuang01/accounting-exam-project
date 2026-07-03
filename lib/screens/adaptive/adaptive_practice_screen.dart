@@ -34,15 +34,15 @@ class _AdaptivePracticeScreenState extends State<AdaptivePracticeScreen> {
   Future<void> _generatePractice() async {
     setState(() => _isGenerating = true);
     try {
-      final result = await _examService.generateAdaptivePractice(
-        subject: _selectedSubject,
+      final paperId = await _examService.generateAdaptivePractice(
+        int.tryParse(_selectedSubject) ?? 1,
         count: _questionCount,
       );
       if (!mounted) return;
       Navigator.pushNamed(
         context,
         '/exam-taking',
-        arguments: result['paperId'],
+        arguments: {'paperId': paperId, 'durationMinutes': 60, 'paperTitle': '自适应专项练习'},
       );
     } catch (e) {
       if (!mounted) return;
