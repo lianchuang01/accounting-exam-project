@@ -58,6 +58,8 @@ class Question {
 }
 
 class QuestionOption {
+  String get key => label;
+  String get value => text;
   final String label;
   final String text;
   QuestionOption({required this.label, required this.text});

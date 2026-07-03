@@ -20,9 +20,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
-    final userName = authProvider.user?.name ?? '考生';
-    final userStudentNo = authProvider.user?.studentNo ?? '';
-    final userAccuracy = authProvider.user?.accuracyRate ?? _totalAccuracyRate;
+    final userName = authProvider.userName ?? '考生';
+    final userStudentNo = authProvider.studentNo ?? '';
+    final userAccuracy = 0.0 ;
 
     return Scaffold(
       appBar: AppBar(

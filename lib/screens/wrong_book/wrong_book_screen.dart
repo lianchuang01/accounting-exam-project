@@ -6,9 +6,10 @@ import '../../models/voice_segment.dart';
 import '../../services/report_service.dart';
 
 class WrongBookScreen extends StatefulWidget {
-  final ReportService reportService;
+  final ReportService? reportService;
+  late final ReportService _service = reportService ?? ReportService(ApiClient());
 
-  const WrongBookScreen({super.key, required this.reportService});
+  const WrongBookScreen({super.key, this.reportService});
 
   @override
   State<WrongBookScreen> createState() => _WrongBookScreenState();
@@ -89,7 +90,7 @@ class _WrongBookScreenState extends State<WrongBookScreen>
 
   Future<void> _onReadQuestion(WrongQuestionVO question) async {
     try {
-      final questionId = int.tryParse(question.questionId);
+      final questionId = int.tryParse(question.questionId.toString());
       final ids = questionId != null ? [questionId] : null;
       await widget.reportService.getVoiceQueue(questionIds: ids);
       if (!mounted) return;
@@ -114,7 +115,7 @@ class _WrongBookScreenState extends State<WrongBookScreen>
 
   Future<void> _onClearQuestion(WrongQuestionVO question) async {
     try {
-      final qId = int.tryParse(question.questionId);
+      final qId = int.tryParse(question.questionId.toString());
       if (qId == null) return;
       await widget.reportService.clearWrongQuestion(qId);
       setState(() {

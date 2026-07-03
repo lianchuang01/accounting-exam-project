@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'config/theme.dart';
+import "../config/theme.dart";;
 
 class AppRoutes {
   static const String login = '/login';

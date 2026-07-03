@@ -12,7 +12,7 @@ class ExamListScreen extends StatefulWidget {
 class _ExamListScreenState extends State<ExamListScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  final ExamService _examService = ExamService();
+  final ExamService _examService = ExamService(ApiClient());
   bool _isLoading = true;
   List<ExamPaper> _simulationPapers = [];
   List<ExamPaper> _officialPapers = [];
@@ -37,10 +37,10 @@ class _ExamListScreenState extends State<ExamListScreen>
       _error = null;
     });
     try {
-      final papers = await _examService.fetchExamPapers();
+      final papers = await _examService.getPapers(1);
       setState(() {
-        _simulationPapers = papers.where((p) => p.type == ExamType.simulation).toList();
-        _officialPapers = papers.where((p) => p.type == ExamType.official).toList();
+        _simulationPapers = papers.where((p) => p.paperType == "SIMULATION").toList();
+        _officialPapers = papers.where((p) => p.paperType == "OFFICIAL").toList();
         _isLoading = false;
       });
     } catch (e) {

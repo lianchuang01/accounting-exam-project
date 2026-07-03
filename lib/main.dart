@@ -50,14 +50,6 @@ class AccountingExamApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       initialRoute: AppRoutes.login,
-      onGenerateInitialRoute: (settings) {
-        // Check if already logged in
-        final auth = context.read<AuthProvider>();
-        if (auth.isLoggedIn) {
-          return auth.isStudent ? AppRoutes.home : AppRoutes.admin;
-        }
-        return AppRoutes.login;
-      },
       routes: {
         AppRoutes.login: (_) => const LoginScreen(),
         AppRoutes.register: (_) => const RegisterScreen(),
@@ -74,9 +66,7 @@ class AccountingExamApp extends StatelessWidget {
           final args = settings.arguments as Map<String, dynamic>;
           return MaterialPageRoute(
             builder: (_) => ExamTakingScreen(
-              paperId: args['paperId'] as int,
-              durationMinutes: args['durationMinutes'] as int,
-              paperTitle: args['paperTitle'] as String,
+              paperId: (args['paperId'] ?? '').toString(),
             ),
           );
         }

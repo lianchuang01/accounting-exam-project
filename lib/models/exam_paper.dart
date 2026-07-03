@@ -1,6 +1,8 @@
 import 'question.dart';
 
 class ExamPaper {
+  int get year => yearSource ?? 0;
+  int get totalQuestions => questionCount ?? 0;
   final int id;
   final String title;
   final String paperType;

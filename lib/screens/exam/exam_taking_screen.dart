@@ -15,7 +15,7 @@ class ExamTakingScreen extends StatefulWidget {
 }
 
 class _ExamTakingScreenState extends State<ExamTakingScreen> {
-  final ExamService _examService = ExamService();
+  final ExamService _examService = ExamService(ApiClient());
   late PageController _pageController;
   ExamPaper? _paper;
   List<Question> _questions = [];
@@ -44,7 +44,7 @@ class _ExamTakingScreenState extends State<ExamTakingScreen> {
 
   Future<void> _loadExam() async {
     try {
-      final result = await _examService.fetchExamWithQuestions(widget.paperId);
+      final result = await _examService.getPaperDetail(int.tryParse(widget.paperId) ?? 0);
       setState(() {
         _paper = result['paper'] as ExamPaper;
         _questions = result['questions'] as List<Question>;
@@ -120,7 +120,7 @@ class _ExamTakingScreenState extends State<ExamTakingScreen> {
 
     try {
       final result = await _examService.submitExam(
-        paperId: widget.paperId,
+        paperId: int.tryParse(widget.paperId) ?? 0,
         answers: _answers,
       );
       if (!mounted) return;
@@ -430,13 +430,13 @@ class _ExamTakingScreenState extends State<ExamTakingScreen> {
       case QuestionType.singleChoice:
         for (int i = 0; i < question.options.length; i++) {
           final opt = question.options[i];
-          final isSelected = currentAnswer == opt.key;
+          final isSelected = currentAnswer == opt.label;
           widgets.add(
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
-                onTap: () => _onAnswerChanged(question.id, opt.key),
+                onTap: () => _onAnswerChanged(question.id.toString(), opt.label),
                 child: Container(
                   decoration: BoxDecoration(
                     color: isSelected
@@ -454,14 +454,14 @@ class _ExamTakingScreenState extends State<ExamTakingScreen> {
                   child: Row(
                     children: [
                       Radio<String>(
-                        value: opt.key,
+                        value: opt.label,
                         groupValue: currentAnswer as String?,
                         activeColor: const Color(0xFF1A73E8),
-                        onChanged: (v) => _onAnswerChanged(question.id, v),
+                        onChanged: (v) => _onAnswerChanged(question.id.toString(), v),
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        '${optionLabels[i]}. ${opt.value}',
+                        '${optionLabels[i]}. ${opt.text}',
                         style: TextStyle(
                           fontSize: 15,
                           color: isSelected ? const Color(0xFF1A73E8) : Colors.black87,
@@ -482,7 +482,7 @@ class _ExamTakingScreenState extends State<ExamTakingScreen> {
             (currentAnswer as List<String>?) ?? <String>[];
         for (int i = 0; i < question.options.length; i++) {
           final opt = question.options[i];
-          final isSelected = selectedList.contains(opt.key);
+          final isSelected = selectedList.contains(opt.label);
           widgets.add(
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
@@ -491,11 +491,11 @@ class _ExamTakingScreenState extends State<ExamTakingScreen> {
                 onTap: () {
                   final newList = List<String>.from(selectedList);
                   if (isSelected) {
-                    newList.remove(opt.key);
+                    newList.remove(opt.label);
                   } else {
-                    newList.add(opt.key);
+                    newList.add(opt.label);
                   }
-                  _onAnswerChanged(question.id, newList);
+                  _onAnswerChanged(question.id.toString(), newList);
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -517,16 +517,16 @@ class _ExamTakingScreenState extends State<ExamTakingScreen> {
                         onChanged: (v) {
                           final newList = List<String>.from(selectedList);
                           if (v == true) {
-                            newList.add(opt.key);
+                            newList.add(opt.label);
                           } else {
-                            newList.remove(opt.key);
+                            newList.remove(opt.label);
                           }
-                          _onAnswerChanged(question.id, newList);
+                          _onAnswerChanged(question.id.toString(), newList);
                         },
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        '${optionLabels[i]}. ${opt.value}',
+                        '${optionLabels[i]}. ${opt.text}',
                         style: TextStyle(
                           fontSize: 15,
                           color: isSelected ? Colors.orange.shade700 : Colors.black87,
@@ -551,7 +551,7 @@ class _ExamTakingScreenState extends State<ExamTakingScreen> {
                 Expanded(
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12),
-                    onTap: () => _onAnswerChanged(question.id, 'true'),
+                    onTap: () => _onAnswerChanged(question.id.toString(), 'true'),
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 40),
                       decoration: BoxDecoration(
@@ -595,7 +595,7 @@ class _ExamTakingScreenState extends State<ExamTakingScreen> {
                 Expanded(
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12),
-                    onTap: () => _onAnswerChanged(question.id, 'false'),
+                    onTap: () => _onAnswerChanged(question.id.toString(), 'false'),
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 40),
                       decoration: BoxDecoration(

@@ -6,12 +6,13 @@ import '../../services/report_service.dart';
 import '../../config/theme.dart';
 
 class ReportScreen extends StatefulWidget {
-  final ReportService reportService;
+  final ReportService? reportService;
+  late final ReportService _service = reportService ?? ReportService(ApiClient());
   final String studentName;
 
   const ReportScreen({
     super.key,
-    required this.reportService,
+    this.reportService,
     this.studentName = '',
   });
 

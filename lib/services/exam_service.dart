@@ -62,7 +62,7 @@ class ExamService {
   Future<int> generateAdaptivePractice(int subjectId, {int count = 20}) async {
     try {
       final res = await _client.post('/exam/adaptive-practice',
-          params: {'subjectId': subjectId, 'count': count});
+          queryParameters: {'subjectId': subjectId, 'count': count});
       return _unwrap(res) as int;
     } on DioException catch (e) {
       throw _handleError(e);
